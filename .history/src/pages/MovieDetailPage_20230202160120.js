@@ -17,7 +17,7 @@ const MovieDetailPage = () => {
   useEffect(() => {
     async function getCredit() {
       const respone = await fetch(`
-      https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`);
+      https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`);
       const credit = await respone.json();
       const cast = await credit.cast;
       setCredit(cast);

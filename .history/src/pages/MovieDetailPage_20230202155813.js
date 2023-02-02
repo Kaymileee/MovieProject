@@ -9,6 +9,7 @@ const MovieDetailPage = () => {
   const { movieId } = useParams();
   const [credit, setCredit] = useState([]);
 
+  console.log(movieId);
   const { data } = useSWR(
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`,
     fetcher
@@ -17,7 +18,7 @@ const MovieDetailPage = () => {
   useEffect(() => {
     async function getCredit() {
       const respone = await fetch(`
-      https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`);
+      https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`);
       const credit = await respone.json();
       const cast = await credit.cast;
       setCredit(cast);
@@ -25,7 +26,7 @@ const MovieDetailPage = () => {
     getCredit();
   }, []);
   if (!data) return null;
-  const casts = credit ? credit.slice(0, 5) : [];
+  const casts = credit.slice(0, 5);
   const { backdrop_path, poster_path, original_title, genres, overview, id } =
     data;
 

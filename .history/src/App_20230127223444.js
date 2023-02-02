@@ -3,7 +3,13 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import MovieCard from "./components/movies/MovieCard";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/scss";
-
+// import MoviesPageV2 from "./pages/MoviesPageV2";
+// import HomePage from "./pages/HomePage";
+// import Main from "./components/layouts/Main";
+// import MoviesPage from "./pages/MoviesPage";
+// import MovieDetailPage from "./pages/MovieDetailPage";
+// import TVPage from "./pages/TVPage";
+// import TVDetailPage from "./pages/TVDetailPage";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const Main = lazy(() => import("./components/layouts/Main"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));

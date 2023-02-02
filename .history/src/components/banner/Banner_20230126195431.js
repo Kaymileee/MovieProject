@@ -29,6 +29,7 @@ const Banner = () => {
       setMovies(data.results.slice(0, 5));
     }
   }, [data]);
+  console.log(movies);
   function getTag(ids) {
     const tagId = gen.filter((item) => Number(item.id) === Number(ids));
     const tag = tagId[0];
@@ -40,7 +41,7 @@ const Banner = () => {
         {movies.length > 0 &&
           movies.map((item) => (
             <SwiperSlide key={item.id}>
-              <div div className="relative w-full h-full rounded-lg">
+              <div div className="w-full h-full rounded-lg  relative">
                 <div
                   className="overplay absolute inset-0 bg-gradient-to-t 
       from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg "
@@ -50,15 +51,15 @@ const Banner = () => {
                 <img
                   src={`https://image.tmdb.org/t/p/original/${item?.backdrop_path}`}
                   alt=""
-                  className="object-cover w-full h-full rounded-lg"
+                  className="w-full h-full object-cover rounded-lg"
                 />
-                <div className="absolute text-white content left-5 bottom-5">
-                  <h2 className="mb-5 text-3xl font-bold">{item.title}</h2>
-                  <div className="flex items-center mb-8 gap-x-3">
+                <div className="content absolute left-5 bottom-5 text-white">
+                  <h2 className="font-bold text-3xl mb-5">{item.title}</h2>
+                  <div className="flex items-center gap-x-3 mb-8">
                     {item.genre_ids.map((ids) => (
                       <span
                         key={ids}
-                        className="px-2 py-1 font-medium text-white border border-white rounded-md"
+                        className="px-2 py-1 font-medium rounded-md border-white border text-white"
                       >
                         {getTag(ids)}
                       </span>

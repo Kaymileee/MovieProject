@@ -8,7 +8,6 @@ import { apiKey, fetcher, tmvdbImg } from "../config";
 const MovieDetailPage = () => {
   const { movieId } = useParams();
   const [credit, setCredit] = useState([]);
-
   const { data } = useSWR(
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`,
     fetcher
@@ -17,7 +16,7 @@ const MovieDetailPage = () => {
   useEffect(() => {
     async function getCredit() {
       const respone = await fetch(`
-      https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`);
+      https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=en-US`);
       const credit = await respone.json();
       const cast = await credit.cast;
       setCredit(cast);
@@ -25,16 +24,16 @@ const MovieDetailPage = () => {
     getCredit();
   }, []);
   if (!data) return null;
-  const casts = credit ? credit.slice(0, 5) : [];
+  const casts = credit.slice(0, 5);
   const { backdrop_path, poster_path, original_title, genres, overview, id } =
     data;
 
   return (
     <div className="pb-10 page-container">
       <div className="w-full h-[600px] relative ">
-        <div className="absolute inset-0 w-full h-full bg-black bg-opacity-70"></div>
+        <div className="w-full inset-0 h-full bg-black bg-opacity-70 absolute"></div>
         <div
-          className="w-full h-full bg-no-repeat bg-cover"
+          className="w-full h-full bg-cover bg-no-repeat"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original/${
               backdrop_path || poster_path
@@ -46,19 +45,19 @@ const MovieDetailPage = () => {
         <img
           src={tmvdbImg.getOriginal(poster_path)}
           alt=""
-          className="object-cover w-full h-full rounded-xl"
+          className="w-full h-full object-cover rounded-xl"
         />
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="mb-10 text-3xl font-semibold text-left text-primary">
+      <div className="flex items-center justify-center flex-col">
+        <h1 className="text-primary font-semibold text-3xl mb-10 text-left">
           {original_title}
         </h1>
         {genres.length > 0 && (
-          <div className="flex items-center mb-10 gap-x-5">
+          <div className="flex items-center gap-x-5 mb-10">
             {genres.map((gen) => (
               <span
                 key={gen.id}
-                className="px-2 py-1 font-medium text-white border rounded-md border-primary"
+                className="px-2 py-1 font-medium rounded-md border-primary border text-white"
               >
                 {gen.name}
               </span>
@@ -66,15 +65,15 @@ const MovieDetailPage = () => {
           </div>
         )}
         <div className="overview max-w-[800px] text-slate-500 w-full ">
-          <p className="text-xl font-normal text-center ">{overview}</p>
+          <p className=" text-xl font-normal text-center">{overview}</p>
         </div>
         <div>
-          <h3 className="my-10 text-3xl font-semibold text-center text-white">
+          <h3 className="text-3xl my-10 text-white font-semibold text-center">
             Casts
           </h3>
           <MovieCast></MovieCast>
         </div>
-        <div className="w-full videos page-container">
+        <div className="videos w-full page-container">
           <MovieVideo></MovieVideo>
           <SimilarMovies></SimilarMovies>
         </div>
@@ -103,9 +102,9 @@ const MovieCast = () => {
             <img
               src={`https://image.tmdb.org/t/p/w500/${item.profile_path}`}
               alt=""
-              className="object-cover w-full h-full rounded-lg"
+              className="w-full h-full object-cover rounded-lg"
             />
-            <h4 className="absolute bottom-0 w-full p-4 font-medium text-center text-white left-2/4 -translate-x-2/4 bg-primary">
+            <h4 className="absolute bottom-0 left-2/4 -translate-x-2/4 p-4 bg-primary w-full text-center  text-white font-medium">
               {item.name}
             </h4>
           </div>
@@ -124,12 +123,12 @@ const MovieVideo = () => {
   if (!data) return null;
   const videos = data.results;
   return (
-    <div className="flex flex-col items-center justify-between py-10 ">
+    <div className=" flex flex-col  justify-between items-center py-10">
       {videos &&
         videos.slice(0, 3).map((item) => (
           <div key={item.id} className="w-full aspect-video mb-5 h-[500px]">
             <div>
-              <h3 className="inline-block p-4 mb-5 text-xl font-medium text-white bg-primary">
+              <h3 className="text-white p-4 inline-block text-xl font-medium bg-primary mb-5">
                 {item.name}
               </h3>
             </div>
@@ -142,7 +141,7 @@ const MovieVideo = () => {
                 title={item.name}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
-                className="object-cover w-full h-full"
+                className="w-full h-full object-cover"
               ></iframe>
             </div>
           </div>
